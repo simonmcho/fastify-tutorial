@@ -1,0 +1,19 @@
+version: '3'
+services:
+  mariadb:
+    container_name: docker-db
+    # using a premade image
+    image: mariadb:10.1
+    # this is the external port (outside of docker)
+    expose:
+      - 3306
+    # this is the mapping between external and internal (inside docker)
+    ports:
+      - 3306:3306
+    volumes:
+      # ensure to add data to gitignore so we dont add db to git
+      - ./data:/var/lib/mysql
+    # add any more environemnt variables (we can also add password / username for mysql here)
+    #  Usually this can be passed via pipeline / container orchestration like kubernetes
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
